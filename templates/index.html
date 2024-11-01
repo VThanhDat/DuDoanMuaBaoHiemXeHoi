@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html >
+<!--From https://codepen.io/frytyler/pen/EGdtg-->
+<head>
+  <meta charset="UTF-8">
+  <title>Car Insurance Prediction</title>
+  <link href='https://fonts.googleapis.com/css?family=Pacifico' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Arimo' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Hind:300' rel='stylesheet' type='text/css'>
+<link href='https://fonts.googleapis.com/css?family=Open+Sans+Condensed:300' rel='stylesheet' type='text/css'>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+ <div class="login">
+	<h1>Car insurance prediction</h1>
+
+     <!-- Main Input For Receiving Query to our ML -->
+    <form action="{{ url_for('predict')}}" method="post">
+        <h3>Age</h3>
+            <select name="age" required="required">
+                <option value="0">16-25</option>
+                <option value="1">26-39</option>
+                <option value="2">40-64</option>
+                <option value="3">65+</option>
+            </select> <br>
+            <h3>Sex</h3>
+            <select name="sex" required="required">
+                <option value="0">Female</option>
+                <option value="1">Male</option>
+            </select><br>
+            <h3>Race</h3>
+            <select name="race" required="required">
+                <option value="0">Majority</option>
+                <option value="1">Minority</option>
+            </select><br>
+            <h3>Driving Experience</h3>
+            <select name="driving_experience" required="required">
+                <option value="0">0-9 years</option>
+                <option value="1">10-19 years</option>
+                <option value="2">20-29 years</option>
+                <option value="3">30+ years</option>
+            </select><br>
+            <h3>Education</h3>
+            <select name="education" required="required">
+                <option value="0">High School</option>
+                <option value="1">None</option>
+                <option value="2">University</option>
+            </select><br>
+            <h3>Income</h3>
+            <select name="income" required="required">
+                <option value="0">Middle Class</option>
+                <option value="1">Poverty</option>
+                <option value="3">Working Class</option>
+                <option value="2">Upper Class</option>
+            </select><br>
+        <h3>Credit_Score</h3>
+        <input type="number" name="CREDIT_SCORE" placeholder="0.1293232..." required="required" step="any" />
+        <h3>Vehicle Ownership</h3>
+            <select name="vehicle_ownership" required="required">
+                <option value="0">No</option>
+                <option value="1">Yes</option>
+            </select><br>
+        <h3>Vehicle Year</h3>
+        <select name="vehicle_year" required="required">
+            <option value="0">After 2015</option>
+            <option value="1">Before 2015</option>
+        </select><br>
+        <h3>Married</h3>
+        <select name="married" required="required">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select><br>
+        <h3>Children</h3>
+        <select name="children" required="required">
+            <option value="0">No</option>
+            <option value="1">Yes</option>
+        </select><br>
+        <h3>Postal Code</h3>
+        <select name="postal_code" required="required">
+            <option value="10238">10238</option>
+            <option value="32765">32765</option>
+            <option value="92101">92101</option>
+            <option value="21217">21217</option>
+        </select><br>
+        <h3>annual_mileage</h3>
+        <input type="number" name="attr13" placeholder="1000-22000" required="required" min="1000" max="90000" step="1" />
+        <h3>vehicle_type</h3>
+        <select name="vehicle_type" required="required">
+            <option value="0">sedan</option>
+            <option value="1">sports car</option>
+        </select><br>
+        <h3>Speeding_violations</h3>
+        <input type="number" name="SPEEDING_VIOLATIONS" placeholder="0 - 50" required="required" min="0" max="50" step="1" /><br>
+        <h3>Duis</h3>
+        <input type="number" name="DUIS" placeholder="0 - 50" required="required" min="0" max="50" step="1" /><br>
+        <h3>Pass_accident</h3>
+        <input type="number" name="PAST_ACCIDENTS" placeholder="0 - 50" required="required" min="0" max="50" step="1" /><br>
+        <button type="submit" class="btn btn-primary btn-block btn-large">Predict</button>
+    </form>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #E6E6FA;
+        margin: 20px;
+    }
+
+    h1,h2, h3, h5 {
+        color: #322e2e;
+        text-align: center;
+    }
+
+    form {
+        background-color: #fff;
+        padding: 20px;
+        border-radius: 5px;
+        margin: 0 auto;
+        width: 60%;
+    }
+
+    legend {
+        font-weight: bold;
+        text-align: center;
+    }
+
+    select {
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        border-radius: 5px;
+    }
+    input {
+        width: 98%;
+        padding: 10px;
+        border-radius: 5px;
+    }
+    button {
+        background-color: #4CAF50;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        margin: 20px auto;
+        display: block;
+    }
+
+    button:hover {
+        background-color: #45a049;
+    }
+
+    button:active {
+        background-color: #3e8e41;
+    }
+
+    .result-box {
+        background-color: lightblue;
+        padding: 10px;
+        border-radius: 5px;
+        height: 100px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+</style>
+   <br>
+   <br> 
+   <h1>{{ prediction_text }}</h1>
+ </div>
+
+
+</body>
+</html>
